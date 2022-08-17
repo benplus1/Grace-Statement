@@ -76,8 +76,8 @@ def train(t = 5, p='Math'):
     torch.backends.cudnn.deterministic = True
     dev_set = SumDataset(args, "test", p, testid=t)
     val_set = SumDataset(args, "val", p, testid=t)
-    data = pickle.load(open(p + '.pkl', 'rb'))
-    dev_data = pickle.load(open(p + '.pkl', 'rb'))
+    data = pickle.load(open('./dataset/' + p + '.pkl', 'rb'))
+    dev_data = pickle.load(open('./dataset/' + p + '.pkl', 'rb'))
     train_set = SumDataset(args, "train", testid=t, proj=p, lst=dev_set.ids + val_set.ids)
     numt = len(train_set.data[0])
     args.Code_Vocsize = len(train_set.Code_Voc)

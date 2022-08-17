@@ -277,10 +277,10 @@ class SumDataset(data.Dataset):
             linetypes = []
             methodnum = len(x['lines'])
             rrdict = {}
-            for s in x['methods']:
-                rrdict[x['methods'][s]] = s[:s.index('(')]
+            for s in x['lines']:
+                rrdict[x['lines'][s]] = s[:s.index('(')]
             for i in range(methodnum):
-                nodes.append('Method')
+                nodes.append('Line')
                 if len(rrdict[i].split(":")) > 1:
                     tokens = ".".join(rrdict[i].split(":")[0].split('.')[-2:] + [rrdict[i].split(":")[1]]) 
                 else:

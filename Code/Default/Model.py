@@ -24,6 +24,7 @@ class NlEncoder(nn.Module):
             [TransformerBlock(self.embedding_size, 8, self.feed_forward_hidden, 0.1) for _ in range(5)])
         self.token_embedding = nn.Embedding(args.Nl_Vocsize, self.embedding_size-1)
         self.token_embedding1 = nn.Embedding(args.Nl_Vocsize, self.embedding_size)
+        self.vocsize = args.Nl_Vocsize
 
         self.text_embedding = nn.Embedding(20, self.embedding_size)
         self.transformerBlocksTree = nn.ModuleList(
