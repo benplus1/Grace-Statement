@@ -275,7 +275,7 @@ class SumDataset(data.Dataset):
             textb = []
             linenodes = []
             linetypes = []
-            methodnum = len(x['lines'])
+            methodnum = len(x['methods'])
             rrdict = {}
             for s in x['methods']:
                 rrdict[x['methods'][s]] = s[:s.index('(')]
@@ -296,10 +296,11 @@ class SumDataset(data.Dataset):
                     types.append(1)
                 else:
                     types.append(x['correctnum'][i] + 1)
-                if i in x['ans']:
-                    res.append(1)
-                else:
-                    res.append(0)
+                # METHOD LEVEL
+                # if i in x['ans']:
+                #     res.append(1)
+                # else:
+                #     res.append(0)
             rrdic = {}
             for s in x['ftest']:
                 rrdic[x['ftest'][s]] = s
@@ -351,6 +352,10 @@ class SumDataset(data.Dataset):
                     linetypes.append(x['lcorrectnum'][i])
                 else:
                     linetypes.append(1)
+                if i in x['lans']:
+                    res.append(1)
+                else:
+                    res.append(0)
             '''for i in range(len(x['mutation'])):
                 if x['mutation'][i] not in self.Nl_Voc:
                     self.Nl_Voc[x['mutation'][i]] = len(self.Nl_Voc)
@@ -593,9 +598,14 @@ class SumDataset(data.Dataset):
                         nladval.append(t / len(texta[i]))'''
 
             #print(overlap)
+            print("===================================")
+            print(nodes)
+            print(self.Get_Em(nodes, self.Nl_Voc))
+            print(self.pad_seq(self.Get_Em(nodes, self.Nl_Voc), self.Nl_Len))
+            print("===================================")
             Nodes.append(self.pad_seq(self.Get_Em(nodes, self.Nl_Voc), self.Nl_Len))
             Types.append(self.pad_seq(types, self.Nl_Len))
-            Res.append(self.pad_seq(res, self.Nl_Len))
+            Res.append(self.pad_seq(res, self.Code_Len))
             LineMus.append(self.pad_list(mus, self.Code_Len, 3))
             inputText.append(self.pad_seq(overlap, self.Nl_Len))
             #inputText.append(self.pad_list(text, self.Nl_Len, 10))

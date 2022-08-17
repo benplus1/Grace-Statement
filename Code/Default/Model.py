@@ -35,10 +35,14 @@ class NlEncoder(nn.Module):
         self.norm = LayerNorm(self.embedding_size)
         self.lstm = nn.LSTM(self.embedding_size // 2, int(self.embedding_size / 4), batch_first=True, bidirectional=True)
         self.conv = nn.Conv2d(self.embedding_size, self.embedding_size, (1, 10))
+        # ALIGN TO METHOD LEVEL
         self.resLinear2 = nn.Linear(self.embedding_size, 1)
     def forward(self, input_node, inputtype, inputad, res, inputtext, linenode, linetype, linemus):
         nlmask = torch.gt(input_node, 0)
+
         resmask = torch.eq(input_node, 2)#torch.gt(res, 0)
+        resmaskStmt = torch.eq(linenode, 2)
+
         inputad = inputad.float()
         nodeem = self.token_embedding(input_node)
         nodeem = torch.cat([nodeem, inputtext.unsqueeze(-1).float()], dim=-1)
@@ -47,8 +51,12 @@ class NlEncoder(nn.Module):
         x = torch.cat([x, lineem], dim=1)
         for trans in self.transformerBlocks:
             x = trans.forward(x, nlmask, inputad)
-        x = x[:,:input_node.size(1)]
-        resSoftmax = F.softmax(self.resLinear2(x).squeeze(-1).masked_fill(resmask==0, -1e9), dim=-1)
+        # LOOK AT METHODS
+        # y = x[:,:input_node.size(1)]
+        # LOOK AT STATEMENTS
+        x = x[:,input_node.size(1):]
+
+        resSoftmax = F.softmax(self.resLinear2(x).squeeze(-1).masked_fill(resmaskStmt==0, -1e9), dim=-1)
         loss = -torch.log(resSoftmax.clamp(min=1e-10, max=1)) * res
         loss = loss.sum(dim=-1)
         return loss, resSoftmax, x

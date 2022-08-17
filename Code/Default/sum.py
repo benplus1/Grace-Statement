@@ -11,13 +11,13 @@ batch_size = int(sys.argv[4])
 
 t = {}
 for i in range(0, versionNum[proj]):
-    if not os.path.exists(proj + 'res%d_%d_%s_%s.pkl'%(i, seed, lr, batch_size)):
+    if not os.path.exists('results/' + proj + '/' + proj + 'res%d_%d_%s_%s.pkl'%(i, seed, lr, batch_size)):
         continue
-    p = pickle.load(open(proj + 'res%d_%d_%s_%s.pkl'%(i,seed, lr, batch_size), 'rb'))
+    p = pickle.load(open('results/' + proj + '/' + proj + 'res%d_%d_%s_%s.pkl'%(i,seed, lr, batch_size), 'rb'))
     for x in p:
         t[x] = p[x]
 
 
     
-open(proj + 'res_%d_%s_%s.pkl'%(seed,lr, batch_size), 'wb').write(pickle.dumps(t))
+open('results/' + proj + '/' + proj + 'res_%d_%s_%s.pkl'%(seed,lr, batch_size), 'wb').write(pickle.dumps(t))
 print(len(t))

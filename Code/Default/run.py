@@ -1,6 +1,9 @@
+import importlib
 import torch
 from torch import optim
 from Dataset import SumDataset
+import Dataset
+importlib.reload(Dataset)
 import os
 from tqdm import tqdm
 from Model import *
@@ -114,19 +117,30 @@ def train(t = 5, p='Math'):
                             devBatch[i] = gVar(devBatch[i])
                         with torch.no_grad():
                             l, pre, _ = model(devBatch[0], devBatch[1], devBatch[2], devBatch[3], devBatch[4], devBatch[5], devBatch[6], devBatch[7])
-                            resmask = torch.eq(devBatch[0], 2)
+                            # resmask = torch.eq(devBatch[0], 2)
+                            resmaskStmt = torch.eq(devBatch[5], 2)
+                            # print(resmaskStmt.data.cpu().numpy())
                             s = -pre#-pre[:, :, 1]
-                            s = s.masked_fill(resmask == 0, 1e9)
+                            # s = s.masked_fill(resmask == 0, 1e9)
+                            s = s.masked_fill(resmaskStmt == 0, 1e9)
                             pred = s.argsort(dim=-1)
                             pred = pred.data.cpu().numpy()
+                            # print(pred)
                             alst = []
 
                             for k in range(len(pred)): 
                                 datat = data[val_set.ids[k]]
                                 maxn = 1e9
-                                lst = pred[k].tolist()[:resmask.sum(dim=-1)[k].item()]#score = np.sum(loss) / numt
+                                # val = resmask.sum(dim=-1)[k].item()
+                                val2 = resmaskStmt.sum(dim=-1)[k].item()
+                                # print(val)
+                                print(val2)
+                                lst = pred[k].tolist()[:val2]#score = np.sum(loss) / numt
                                 #bans = lst
-                                for x in datat['ans']:
+                                # METHOD LEVEL
+                                # for x in datat['ans']:
+                                # STATEMENT LEVEL
+                                for x in datat['lans']:
                                     i = lst.index(x)
                                     maxn = min(maxn, i)
                                 score2.append(maxn)
@@ -168,7 +182,7 @@ if __name__ == "__main__":
     res = {}    
     p = sys.argv[2]
     res[int(sys.argv[1])] = train(int(sys.argv[1]), p)
-    open('%sres%d_%d_%s_%s.pkl'%(p, int(sys.argv[1]), args.seed, args.lr, args.batch_size), 'wb').write(pickle.dumps(res))
+    open('results/' + p + '/%sres%d_%d_%s_%s.pkl'%(p, int(sys.argv[1]), args.seed, args.lr, args.batch_size), 'wb').write(pickle.dumps(res))
 
 
 

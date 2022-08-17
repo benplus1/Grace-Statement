@@ -17,8 +17,8 @@ def splitCamel(token):
                 tmp += x.lower()
         ans.append(tmp)
         return ans
-p = pickle.load(open(pr + 'res_%d_%s_%s.pkl'%(seed,lr,batch_size), 'rb'))
-f = pickle.load(open(pr + '.pkl', 'rb'))
+p = pickle.load(open('results/' + pr + '/' + pr + 'res_%d_%s_%s.pkl'%(seed,lr,batch_size), 'rb'))
+f = pickle.load(open('dataset/' + pr + '.pkl', 'rb'))
 
 print(len(f), len(p))
 #assert(0)
@@ -32,7 +32,7 @@ for _, i in enumerate(p):
     score.extend(xs[0])
     print(i, xs[0], xs[1])
     minl = 1e9
-    for x in f[i]['ans']:
+    for x in f[i]['lans']:
         m = xs[1].index(x)
         minl = min(minl, m)
     score2.append(minl)
@@ -45,12 +45,12 @@ for _, i in enumerate(p):
     for x in f[i]['ftest']:
         print(splitCamel(".".join(x.split(":")[0].split(".")[-2:])), x, ".".join(x.split(":")[0].split(".")[-2:]))
     print("-----")
-    for x in f[i]['ans']:
+    for x in f[i]['lans']:
         print(splitCamel(rrdic[x]), rrdic[x], ',')
     print("-----")
-    print(rrdic, f[i]['ans'])
-    print(splitCamel(rrdic[xs[1][0]]), rrdic[xs[1][0]], ',', xs[1][0], f[i]['ans'])
-    #print(f[i]['methods'], f[i]['ftest'], f[i]['ans'])
+    print(rrdic, f[i]['lans'])
+    print(splitCamel(rrdic[xs[1][0]]), rrdic[xs[1][0]], ',', xs[1][0], f[i]['lans'])
+    #print(f[i]['methods'], f[i]['ftest'], f[i]['lans'])
     for x in xs[2]:
         if x in eps:
             eps[x] += 1
@@ -61,7 +61,7 @@ for _, i in enumerate(p):
     #print(xs[2])
     #score.append(maxn)
 
-with open(pr + 'result_final_%d_%s_%s'%(seed,lr, batch_size), 'w') as pp:
+with open('results/' + pr + '/' + pr + 'result_final_%d_%s_%s'%(seed,lr, batch_size), 'w') as pp:
     pp.write("lr: %f seed %d batch_size %d\n"%(lr, seed, batch_size))
     pp.write('num: %s\n'%len(p))
     pp.write('%d: %d\n'%(10, eps[10]))
@@ -104,7 +104,7 @@ print(len(best_ids))
 #     best_pred = each_epoch_pred[best_epoch]
 #     ar = []
 #     minl = 1e9
-#     for x in f[idx]['ans']:
+#     for x in f[idx]['lans']:
 #         m = best_pred.index(x)
 #         ar.append(m)
 #         minl = min(minl, m)

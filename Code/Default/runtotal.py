@@ -3,6 +3,8 @@ from tqdm import tqdm
 import time
 import os, sys
 import pickle
+import torch
+torch.cuda.empty_cache()
 project = sys.argv[1]
 card = [0]
 lst = list(range(len(pickle.load(open('./dataset/' + project + '.pkl', 'rb')))))
