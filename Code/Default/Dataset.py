@@ -598,11 +598,11 @@ class SumDataset(data.Dataset):
                         nladval.append(t / len(texta[i]))'''
 
             #print(overlap)
-            print("===================================")
-            print(nodes)
-            print(self.Get_Em(nodes, self.Nl_Voc))
-            print(self.pad_seq(self.Get_Em(nodes, self.Nl_Voc), self.Nl_Len))
-            print("===================================")
+            # print("===================================")
+            # print(nodes)
+            # print(self.Get_Em(nodes, self.Nl_Voc))
+            # print(self.pad_seq(self.Get_Em(nodes, self.Nl_Voc), self.Nl_Len))
+            # print("===================================")
             Nodes.append(self.pad_seq(self.Get_Em(nodes, self.Nl_Voc), self.Nl_Len))
             Types.append(self.pad_seq(types, self.Nl_Len))
             Res.append(self.pad_seq(res, self.Code_Len))
@@ -613,7 +613,7 @@ class SumDataset(data.Dataset):
             LineTypes.append(self.pad_seq(linetypes, self.Code_Len))
             row = {}
             col = {}
-            for i  in range(len(nladrow)):
+            for i in range(len(nladrow)):
                 if nladrow[i] not in row:
                     row[nladrow[i]] = 0
                 row[nladrow[i]] += 1

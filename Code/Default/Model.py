@@ -41,7 +41,8 @@ class NlEncoder(nn.Module):
         nlmask = torch.gt(input_node, 0)
 
         resmask = torch.eq(input_node, 2)#torch.gt(res, 0)
-        resmaskStmt = torch.eq(linenode, 2)
+        resmaskStmt = torch.eq(linenode, 0)
+        resmaskStmt = ~resmaskStmt
 
         inputad = inputad.float()
         nodeem = self.token_embedding(input_node)

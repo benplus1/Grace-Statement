@@ -118,7 +118,8 @@ def train(t = 5, p='Math'):
                         with torch.no_grad():
                             l, pre, _ = model(devBatch[0], devBatch[1], devBatch[2], devBatch[3], devBatch[4], devBatch[5], devBatch[6], devBatch[7])
                             # resmask = torch.eq(devBatch[0], 2)
-                            resmaskStmt = torch.eq(devBatch[5], 2)
+                            resmaskStmt = torch.eq(devBatch[5], 0)
+                            resmaskStmt = ~resmaskStmt
                             # print(resmaskStmt.data.cpu().numpy())
                             s = -pre#-pre[:, :, 1]
                             # s = s.masked_fill(resmask == 0, 1e9)
