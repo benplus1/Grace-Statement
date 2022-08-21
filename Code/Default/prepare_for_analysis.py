@@ -4,7 +4,7 @@ import json
 import sys
 import os
 
-project_name = "Chart"
+project_name = "Time"
 
 with open('dataset/jsonConversions/' + project_name + '.json', 'rb') as f:
     project_json = json.load(f)

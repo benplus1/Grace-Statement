@@ -178,3 +178,6 @@ python run.py 176 Closure 0.01 0 60
 python run.py 177 Closure 0.01 0 60
 python run.py 178 Closure 0.01 0 60
 python run.py 179 Closure 0.01 0 60
+
+python sum.py Closure 0.01 0 60
+python watch.py Closure 0.01 0 60

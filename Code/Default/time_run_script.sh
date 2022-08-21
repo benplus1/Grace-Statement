@@ -28,3 +28,6 @@ python run.py 26 Time 0.01 0 60
 python run.py 27 Time 0.01 0 60
 python run.py 28 Time 0.01 0 60
 python run.py 29 Time 0.01 0 60
+
+python sum.py Time 0.01 0 60
+python watch.py Time 0.01 0 60

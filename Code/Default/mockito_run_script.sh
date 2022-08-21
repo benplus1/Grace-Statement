@@ -40,3 +40,7 @@ python run.py 38 Mockito 0.01 0 60
 python run.py 39 Mockito 0.01 0 60
 python run.py 40 Mockito 0.01 0 60
 python run.py 41 Mockito 0.01 0 60
+
+
+python sum.py Mockito 0.01 0 60
+python watch.py Mockito 0.01 0 60
