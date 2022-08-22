@@ -371,6 +371,9 @@ class SumDataset(data.Dataset):
 
             line2method = {}
             for e in x['edge2']:
+                # print(e)
+                # print(e[0])
+                # print(e[1])
                 line2method[e[1]] = e[0]
                 a = e[0]
                 b = e[1] + self.Nl_Len#len(x['ftest']) + methodnum

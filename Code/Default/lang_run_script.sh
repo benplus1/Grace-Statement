@@ -69,5 +69,5 @@ python run.py 67 Lang 0.01 0 60
 python run.py 68 Lang 0.01 0 60
 python run.py 69 Lang 0.01 0 60
 
-python sum.py Lang 0.01 0 60
-python watch.py Lang 0.01 0 60
+python sum.py Lang 0 0.01 60
+python watch.py Lang 0 0.01 60
